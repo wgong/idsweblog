@@ -28,13 +28,13 @@ db_1_45bd2fa92737 | FATAL:  role "dbusr" does not exist
 db_1_45bd2fa92737 | psql: FATAL:  role "dbusr" does not exist
 
 ** fix
-# bring up db container
+*** bring up db container
 $ docker-compose up db
 
-# find container name= weblog_db_1_45bd2fa92737
+*** find container name= weblog_db_1_45bd2fa92737
 $ docker ps
 
-# get into CONTAINER
+*** get into CONTAINER
 $ docker exec -it weblog_db_1_45bd2fa92737 bash
 
 create user/pwd in postgresql manually
@@ -52,7 +52,7 @@ CREATE TABLE  weblogs (
 
 \q
 
-# stop db container
+*** stop db container
 $ docker stop 6708542d62b9
 
 * issue =====================
@@ -75,7 +75,7 @@ db:
 $ docker-compose up db
 $ docker ps # get container_id=weblog_db_1_7c4480eab75e
 
-# alter table by connecting to postgresql container directly
+*** alter table by connecting to postgresql container directly
 $ docker exec -it weblog_db_1_7c4480eab75e bash
 
 root@ec7bf38746e7:/# psql -U dbuser testdb
