@@ -1,0 +1,12 @@
+# postgresql vars
+POSTGRES_USER=dbuser
+POSTGRES_PASSWORD=dbuser
+POSTGRES_DB=testdb
+POSTGRES_HOST=db
+
+APP_SECRET_KEY=super_duper_secret
+
+# rabbitmq vars
+RABBITMQ_DEFAULT_USER=rabbitmq
+RABBITMQ_DEFAULT_PASS=rabbitmq
+RABBITMQ_DEFAULT_VHOST=/

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+      <h1>Website Availability Rate</h1>
+      <table border=1>
+        <thead><td><font color=red>Source</font></td><td><font color=red>Success Rate</font></td></thead>
+        {% for k,v in rate.items() %}
+        <tr><td>{{k}}</td><td>{{v}}</td></tr>
+        {% endfor %}
+      </table>
+    </body>
+</html>
