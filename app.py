@@ -43,7 +43,8 @@ def index():
         rate_remote = str(success_remote / all_remote)
 
 
-    return render_template('index.html', rate = {'local': rate_local, 'remote': rate_remote})
+    return render_template('index.html', rate = {'local': {'total': all_local, 'success': success_local, 'rate' : rate_local } ,\
+            'remote': {'total': all_remote, 'success': success_remote, 'rate' : rate_remote }})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

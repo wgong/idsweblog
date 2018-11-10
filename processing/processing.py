@@ -6,10 +6,11 @@ import os
 import json
 
 # Connect to RabbitMQ
-credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_USER'], os.environ['RABBITMQ_DEFAULT_PASS'])
+credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_USER'],
+                                    os.environ['RABBITMQ_DEFAULT_PASS'])
 parameters = pika.ConnectionParameters(host='rabbit',
-                                       port=5672, credentials=credentials)
-
+                                       port=5672,
+                                       credentials=credentials)
 while True:
     try:
         connection = pika.BlockingConnection(parameters)
@@ -25,7 +26,10 @@ channel = connection.channel()
 channel.queue_declare(queue='log-analysis')
 
 # Connect to PostgreSQL database
-conn = psycopg2.connect(host=os.environ['POSTGRES_HOST'], database=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], password=os.environ['POSTGRES_PASSWORD'])
+conn = psycopg2.connect(host=os.environ['POSTGRES_HOST'],
+                        database=os.environ['POSTGRES_DB'],
+                        user=os.environ['POSTGRES_USER'],
+                        password=os.environ['POSTGRES_PASSWORD'])
 cur = conn.cursor()
 
 
