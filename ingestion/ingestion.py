@@ -3,6 +3,8 @@ import pika
 import json
 import os
 import time
+import sys
+import traceback
 # from utils import parse_log, is_get_request
 
 import datetime
@@ -28,7 +30,8 @@ def is_get_request(msg):
 #Connect  to RabbitMQ
 credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_USER'], os.environ['RABBITMQ_DEFAULT_PASS'])
 parameters = pika.ConnectionParameters(host='rabbit',
-                                       port=5672, credentials=credentials)
+                                       port=5672,
+                                       credentials=credentials)
 
 while True:
     try:
@@ -70,6 +73,8 @@ while True:
                                   body=body)
 
     except:
-        print("[ *** Ingestion/ERROR] " +  sys.exc_info()[0])
+        print("[ *** Ingestion/ERROR] msg = \n" +  msg)
+        print("[ *** Ingestion/ERROR] " +  traceback.format_exc())
+        #print("[ *** Ingestion/ERROR] " +  sys.exc_info()[0])
 
 connection.close()
