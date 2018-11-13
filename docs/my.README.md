@@ -1,4 +1,3 @@
-
 ## general workflow
 
     $ docker ps

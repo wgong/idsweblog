@@ -1,4 +1,4 @@
-# Insight DevOps Engineering System Puzzle: Weblog
+
 
 ## Table of Contents
 1. [Understanding the puzzle](README.md#understanding-the-puzzle)
@@ -57,32 +57,6 @@ The challenge consists of the following parts:
 
 Once you've corrected the bugs and have the basic features working, commit the functional codebase to a new repo following the instructions below. As you debug the system, you should keep track of your thought process and what steps you took to solve the puzzle.
 
-## Instructions to submit your solution
-* To submit your entry please use the link you received in your systems puzzle invitation
-* You will only be able to submit through the link one time
-* For security, we will not open solutions submitted via files
-* Use the submission box to enter the link to your GitHub repo or Bitbucket ONLY
-* Link to the specific repo for this project, not your general profile
-* Put any comments in the README inside your project repo - However do **not** explain how you solved the puzzle in your README.md
 
-# FAQ
 
-Here are some common questions we've received. If you have additional questions, please email us at `systems-puzzle@insightdatascience.com` and we'll answer your questions as quickly as we can (during PST business hours), and update this FAQ. Again, only contact us after you have read through the Readme and FAQ one more time and cannot find the answer to your question.
 
-### Which Github link should I submit?
-You should submit the URL for the top-level root of your repository. For example, this repo would be submitted by copying the URL `https://github.com/InsightDataScience/System-Puzzle-Weblog` into the appropriate field on the application. **Do NOT try to submit your coding puzzle using a pull request**, which would make your source code publicly available.
-
-### Do I need a private Github repo?
-No, you may use a public repo, there is no need to purchase a private repo. You may also submit a link to a Bitbucket repo if you prefer.
-
-### What sort of system should I use to run my program (Windows, Linux, Mac)?
-You should use Docker to run and test your solution, which should work on any operating system. If you're unfamiliar with Docker, we recommend attending one of our Online Tech Talks on Docker, which you should've received information about in your invitation. Alternatively, there are ample free resources available on docker.com.
-
-### How will my solution be evaluated?
-While we will review your submission briefly before your interview, the main point of this puzzle is to serve as content for discussion during the interview. In the interview, we'll evaluate your problem solving and debugging skills based off how you solved this puzzle, so be sure to document your thought process.
-
-### The website is ugly...should I improve the design?  
-No, you should focus on the functionality. Your engineering team will bring on a designer and front-end developer later in the process, so don't worry about that aspect in this puzzle. If you have extra time, it would be far better to focus on aspects that make the code cleaner and easier to use, like tests and refactoring.
-
-### Should I use orchestration tools like Kubernetes?
-While technologies like Kubernetes are quite powerful, they're likely overkill for the simple application in this puzzle. We recommend that you stick to Docker Compose for this puzzle.
