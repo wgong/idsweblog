@@ -42,7 +42,7 @@ def index():
     if all_remote != 0:
         rate_remote = str(success_remote / all_remote)
 
-    # add raw counts
+
     return render_template('index.html', rate = {'local': {'total': all_local, 'success': success_local, 'rate' : rate_local } ,\
             'remote': {'total': all_remote, 'success': success_remote, 'rate' : rate_remote }})
 

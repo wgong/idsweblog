@@ -1,69 +1,99 @@
-*** workflow
 
-$ docker-compose build
-$ docker-compose up
-$ docker-compose down
+## general workflow
 
+    $ docker ps
+    $ docker-compose build
+    $ docker-compose up
+    $ docker-compose down
 
-* issue =====================
+## test
+
+open browser at http://localhost:8080/
+
+## debugging
+
+### ModuleNotFoundError: `utils`
+
 ingestion_1_d625657adb25 |   File "ingestion.py", line 6, in <module>
 ingestion_1_d625657adb25 |     from utils import parse_log, is_get_request
 ingestion_1_d625657adb25 | ModuleNotFoundError: No module named 'utils'
 
-** fix
-add in ingestion/Dockerfile
-COPY utils.py .
+**fix**
 
-?? not working
+- add in ingestion/Dockerfile
 
-* issue =====================
-ingestion/weblogs.log is too big
+    COPY utils.py .
 
-** fix
-to simplify debug, trim it down to 4 lines
+### NameError: name 'sys' is not defined in ingestion.py
 
-* issue =====================
+**fix**
+
+- add `import sys`
+
+### simplify debugging process
+
+**fix**
+
+- trim `ingestion/weblogs.log` 52MB file size down to 4 lines
+
+- improve print()
+
+
+### role "dbusr" does not exist
 db_1_45bd2fa92737 | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init-tables.sh
 db_1_45bd2fa92737 | FATAL:  role "dbusr" does not exist
 db_1_45bd2fa92737 | psql: FATAL:  role "dbusr" does not exist
 
-** fix
-# bring up db container
-$ docker-compose up db
+**fix**
 
-# find container name= weblog_db_1_45bd2fa92737
-$ docker ps
+- bring up db container
 
-# get into CONTAINER
-$ docker exec -it weblog_db_1_45bd2fa92737 bash
+    $ docker-compose up db
 
-create user/pwd in postgresql manually
-$ psql -U postgres
-alter user postgres password 'postgres';
-\q
+- find container name= weblog_db_1_45bd2fa92737
 
-$ psql -U dbuser testdb
-alter user dbuser password 'dbuser';
+    $ docker ps
 
-CREATE TABLE  weblogs (
-       day    date,
-       status varchar(3)
-       );
+- log into CONTAINER
 
-\q
+    $ docker exec -it weblog_db_1_45bd2fa92737 bash
 
-# stop db container
-$ docker stop 6708542d62b9
+- create user/pwd in postgresql + database manually
 
-* issue =====================
-processing_1_a7cd1a491239 | psycopg2.OperationalError: could not translate host name "db" to address: Name or service not known
+    $ psql -U postgres
 
-** fix
-change host='db' to host='localhost'
+    alter user postgres password 'postgres';
+    alter user dbuser password 'dbuser';
 
-conn = psycopg2.connect(host='localhost', database=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], password=os.environ['POSTGRES_PASSWORD'])
+    CREATE DATABASE testdb;
+    \l
+    \c testdb;
 
-how to persist postgresql db data
+    CREATE TABLE  weblogs (
+           day    date,
+           status varchar(3)
+           );
+
+    \q
+
+    $ psql -U dbuser testdb
+
+    \dS weblogs;
+
+ Column |         Type         | Modifiers
+--------+----------------------+-----------
+ day    | date                 |
+ status | character varying(3) |
+
+    \q
+
+- stop db container
+
+    $ docker stop 6708542d62b9
+
+### persist postgresql db data
+
+**fix**
 
 db:
   image: "postgres:9.6.5"
@@ -71,21 +101,27 @@ db:
     #- ./docker-entrypoint-initdb.d/init-tables.sh:/docker-entrypoint-initdb.d/init-tables.sh
     - /var/dbdata/pgdata:/var/lib/postgresql/data
 
-** extra-credit task
-$ docker-compose up db
-$ docker ps # get container_id=weblog_db_1_7c4480eab75e
+### extra-credit task
 
-# alter table by connecting to postgresql container directly
-$ docker exec -it weblog_db_1_7c4480eab75e bash
+- alter table by connecting to postgresql container directly
 
-root@ec7bf38746e7:/# psql -U dbuser testdb
+    $ docker-compose up db
+    $ docker ps # get container_id=weblog_db_1_7c4480eab75e
+    $ docker exec -it weblog_db_1_7c4480eab75e bash
 
-testdb=# \dS weblogs
+    root@ec7bf38746e7:/# psql -U dbuser testdb
+
+    testdb=# \dS weblogs
           Table "public.weblogs"
- Column |         Type         | Modifiers
---------+----------------------+-----------
- day    | date                 |
- status | character varying(3) |
+   Column |         Type         | Modifiers
+  --------+----------------------+-----------
+   day    | date                 |
+   status | character varying(3) |
 
-alter table weblogs add source varchar(10);
-\q
+  alter table weblogs add source varchar(10);
+  \q
+
+- revise ingestion/ingestion.py to add source to rabbitmq json msg
+- revise processing/processing.py to add source to SQL INSERT statement
+- revise app.py by adding extra SQL queries for source=`remote`
+- revise template/index.html to use HTML table
