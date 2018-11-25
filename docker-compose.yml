@@ -3,7 +3,7 @@ services:
   db:
     image: "postgres:9.6.5"
     volumes:
-      #- ./docker-entrypoint-initdb.d/init-tables.sh:/docker-entrypoint-initdb.d/init-tables.sh
+      - ./docker-entrypoint-initdb.d/init-tables.sh:/docker-entrypoint-initdb.d/init-tables.sh
       - /var/dbdata/pgdata:/var/lib/postgresql/data
     env_file:
       - env_file

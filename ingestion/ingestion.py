@@ -5,8 +5,9 @@ import os
 import time
 import sys
 import traceback
-# from utils import parse_log, is_get_request
 
+# from utils import parse_log, is_get_request
+# not working, include 2 functions inline
 import datetime
 
 def parse_log(msg):
@@ -51,7 +52,11 @@ channel.queue_declare(queue='log-analysis')
 
 # Read weblogs
 
-f = open('weblogs.log', 'r')
+# using smaller file for testing
+#filename_log = 'weblogs-test.log'
+
+filename_log = 'weblogs.log'
+f = open(filename_log, 'r')
 
 while True:
     try:
